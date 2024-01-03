@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier</title>
+    <style>
+        * {
+            border-collapse: collapse;
+        }
+
+        html, body {
+            margin: 0;
+            border: 0;
+            padding: 0;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            background-color: #000000;
+        }
+
+        header > a{
+            padding: 10px;
+            text-decoration: none;
+            color: #FFFFFF;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin: 10px;
+        }
+
+        form > input, form > textarea{
+            width: 320px;
+            height: 25px;
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        .edit {
+            width: 100px;
+            height: 25px;
+            padding-left: 0px;
+            margin-bottom: 0px;
+            background-color: #F2E3B3;
+        }
+
+        .delete {
+            width: 100px;
+            height: 25px;
+            padding-left: 0px;
+            margin-bottom: 0px;
+            background-color: #BF7C63;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <a href="/">Home</a>
+        <a href="/inscription">Inscription</a>
+        <a href="/connexion">Connexion</a>
+    </header>
+    <h1>Attribuer la réservation</h1>
+    <form action="/api/reservationnom/<%= data._id  %>?_method=PUT" method="post">
+        <input type="hidden" name="_method" value="PUT">
+
+        <label for="idReservateur">Nom Reservateur</label>
+        <input type="text" name="id_reserveur" id="idReservateur">
+
+        <input type="submit" value="Valider" class="edit">
+    </form>
+</body>
+</html>

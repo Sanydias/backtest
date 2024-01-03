@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste Des Utilisateur</title>
+    <style>
+        * {
+            border-collapse: collapse;
+        }
+
+        html, body {
+            margin: 0;
+            border: 0;
+            padding: 0;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            background-color: #000000;
+        }
+
+        header > a{
+            padding: 10px;
+            text-decoration: none;
+            color: #FFFFFF;
+        }
+
+        #main {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .bloc {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            margin: 25px;
+            padding: 0 20px;
+            border: 1px solid #000000;
+        }
+
+        h3{
+            margin: 0;
+            color: #818181;
+        }
+
+        .blocBouton{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .edit {
+            background-color: #F2E3B3;
+        }
+
+        .delete {
+            background-color: #BF7C63;
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <a href="/">Home</a>
+        <a href="/inscription">Inscription</a>
+        <a href="/connexion">Connexion</a>
+    </header>
+    <h1>Liste des Salles</h1>
+    <div id="main">
+        <% data.forEach((salle) => { %>
+            <div class="bloc">
+                <h2>
+                    <%= salle.roomname %>
+                </h2>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>
