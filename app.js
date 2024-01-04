@@ -71,6 +71,18 @@
 
     var Reservation = require('./models/Reservation');
 
+    
+
+    const connectDB = async () => {
+        try {
+        const conn = await mongoose.connect(process.env.DATABASE_URL);
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        } catch (error) {
+            console.log(error);
+            process.exit(1);
+        }
+    }
+
 /* HOME */
 
     app.get('/', validateToken, function(req, res){
@@ -327,7 +339,8 @@
     });
 
 /* LANCER SERVEUR */
-
-    var server = app.listen(5005, function () {
-        console.log("server listening on port 5005");
+    connectDB().then(() => {
+        app.listen(5005, function () {
+            console.log("server listening on port 5005");
+        })
     })
