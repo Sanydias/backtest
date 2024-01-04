@@ -61,7 +61,7 @@
     app.set('view engine', 'ejs');
 
     const cors = require('cors');
-    app.use(cors({credentials: true, origin: process.env.LOCALHOST_URL}));
+    app.use(cors({credentials: true, origin: process.env.FRONT_URL}));
 
 /* MODELE USER */
 
@@ -131,19 +131,19 @@
         }).then(user => {
             if (!user){
                 const message = 'User not found';
-                res.redirect(process.env.LOCALHOST_URL + '/connexion?m=' + message);
+                res.redirect(process.env.FRONT_URL + '/connexion?m=' + message);
             }
             console.log(user);
             if (!bcrypt.compareSync(req.body.password, user.password)) {
                 const message = 'Invalid password';
-                res.redirect(process.env.LOCALHOST_URL + '/connexion?m=' + message);
+                res.redirect(process.env.FRONT_URL + '/connexion?m=' + message);
             }
             const accessToken = createTokens(user);
             res.cookie("access-token", accessToken,{
                 maxAge: 1000 * 60 * 60 * 24 * 30, // 30 jours en ms
                 httpOnly:true,
             });
-            res.redirect(process.env.LOCALHOST_URL + '/compte');
+            res.redirect(process.env.FRONT_URL + '/compte');
         }).catch(err => console.error(err));
     });
 
@@ -155,7 +155,7 @@
 
     app.get('/api/deconnexion', function(req, res){
         res.clearCookie('access-token');
-        res.redirect(process.env.LOCALHOST_URL + '');
+        res.redirect(process.env.FRONT_URL + '');
     });
 
 /* MODIFIER UTILISATEUR */
@@ -173,13 +173,13 @@
         if (!req.body.pp){
             res.status(400).send('no file uploaded');
         }
-        User.updateOne({'_id': req.params.id}, {$set: Data}).then(() => { console.log('Data updated successfuly'); res.redirect(process.env.LOCALHOST_URL + '/admin/dashboard'); }).catch(err => console.error(err));
+        User.updateOne({'_id': req.params.id}, {$set: Data}).then(() => { console.log('Data updated successfuly'); res.redirect(process.env.FRONT_URL + '/admin/dashboard'); }).catch(err => console.error(err));
     });
 
 /* SUPPRIMER UTILISATEUR */
 
     app.delete('/supprimer/:id', function (req, res) {
-        User.findOneAndDelete({'_id': req.params.id}).then(() => { console.log('Data deleted successfuly'); res.redirect(process.env.LOCALHOST_URL + '/admin/dashboard'); }).catch(err => console.error(err));
+        User.findOneAndDelete({'_id': req.params.id}).then(() => { console.log('Data deleted successfuly'); res.redirect(process.env.FRONT_URL + '/admin/dashboard'); }).catch(err => console.error(err));
     });
 
 /* LISTE SALLE */
@@ -215,7 +215,7 @@
         if (!req.body.pp){
             res.status(400).send('no file uploaded');
         }
-        Data.save().then(() => { console.log('Data saved successfuly'); res.redirect(process.env.LOCALHOST_URL + '/compte/listesalle'); }).catch(err => console.error(err));
+        Data.save().then(() => { console.log('Data saved successfuly'); res.redirect(process.env.FRONT_URL + '/compte/listesalle'); }).catch(err => console.error(err));
     });
 
 /* MODIFIER SALLE */
@@ -237,13 +237,13 @@
             if (!req.body.pp){
                 res.status(400).send('no file uploaded');
             }
-            Reservation.updateOne({'_id': req.params.id}, {$set: Data}).then(() => { console.log('Data updated successfuly'); res.redirect(process.env.LOCALHOST_URL + '/compte/listesalle'); }).catch(err => console.error(err));
+            Reservation.updateOne({'_id': req.params.id}, {$set: Data}).then(() => { console.log('Data updated successfuly'); res.redirect(process.env.FRONT_URL + '/compte/listesalle'); }).catch(err => console.error(err));
     });
 
 /* SUPPRIMER SALLE */
 
     app.delete('/supprimersalle/:id', function (req, res) {
-        Reservation.findOneAndDelete({'_id': req.params.id}).then(() => { console.log('Data deleted successfuly'); res.redirect(process.env.LOCALHOST_URL + '/compte/listesalle'); }).catch(err => console.error(err));
+        Reservation.findOneAndDelete({'_id': req.params.id}).then(() => { console.log('Data deleted successfuly'); res.redirect(process.env.FRONT_URL + '/compte/listesalle'); }).catch(err => console.error(err));
     });
 
 /* LISTE RESERVATION */
@@ -282,7 +282,7 @@
                 $set: Data
             }).then(() => { 
                 console.log('Data updated successfuly'); 
-                res.redirect(process.env.LOCALHOST_URL + '/compte/reservation/'+ req.params.id); 
+                res.redirect(process.env.FRONT_URL + '/compte/reservation/'+ req.params.id); 
             }).catch(err => console.error(err));
     });
 
@@ -305,7 +305,7 @@
                 $set: Data
             }).then(() => { 
                 console.log('Data updated successfuly'); 
-                res.redirect(process.env.LOCALHOST_URL + '/compte/reservation/'); 
+                res.redirect(process.env.FRONT_URL + '/compte/reservation/'); 
             }).catch(err => console.error(err));
     });
 
@@ -322,7 +322,7 @@
                 $set: Data
             }).then(() => { 
                 console.log('Data updated successfuly'); 
-                res.redirect(process.env.LOCALHOST_URL + '/compte/reservation/'); 
+                res.redirect(process.env.FRONT_URL + '/compte/reservation/'); 
             }).catch(err => console.error(err));
     });
 
