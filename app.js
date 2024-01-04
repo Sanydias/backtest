@@ -80,7 +80,7 @@
 
 /* VALIDATION TOKEN */    
 
-    app.get('/getJWT',validateToken, function(req, res){
+    app.get('/getJWT', function(req, res){
         res.json(jwtDecode(req.cookies["access-token"]));
     });
 
