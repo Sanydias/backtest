@@ -18,6 +18,18 @@
     const url = process.env.DATABASE_URL;
     mongoose.connect(url).then(console.log("MongoDB connected")).catch(err => console.error(err));
 
+    
+
+    const connectDB = async () => {
+        try {
+        const conn = await mongoose.connect(process.env.DATABASE_URL);
+        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        } catch (error) {
+            console.log(error);
+            process.exit(1);
+        }
+    }
+
 /* Bcrypt : Hashage de mot de passe */
 
     const bcrypt = require('bcrypt');
@@ -70,18 +82,6 @@
 /* MODELE RESERVATION */
 
     var Reservation = require('./models/Reservation');
-
-    
-
-    const connectDB = async () => {
-        try {
-        const conn = await mongoose.connect(process.env.DATABASE_URL);
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
-        } catch (error) {
-            console.log(error);
-            process.exit(1);
-        }
-    }
 
 /* HOME */
 
