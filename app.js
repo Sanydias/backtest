@@ -186,13 +186,27 @@
 /* LISTE SALLE */
 
     app.get('/liste', function(req, res){
-        Reservation.find().then((data) => { console.log(data); res.json(data); }).catch(err => console.error(err));
+        Reservation.find()
+        .then((data) => { 
+            console.log(data); 
+            res.json(data); 
+        })
+        .catch(err => {
+            console.error(err)
+        });
     });
 
 /* SALLE */
 
     app.get('/salle/:id', function(req, res){
-        Reservation.findOne({ _id : req.params.id }).then((data) => { console.log(data); res.json( data); }).catch(err => console.error(err));
+        Reservation.findOne({ _id : req.params.id })
+        .then((data) => { 
+            console.log(data); 
+            res.json( data); 
+        })
+        .catch(err => {
+            res.status(404).json({err: err});
+        });
     });
 
 /* AJOUT SALLE */
@@ -201,7 +215,7 @@
         res.render('AjoutSalle');
     });
 
-    app.post('/api/ajoutsalle', upload.single('pp'), function(req, res){
+    app.post('/api/ajoutsalle',/* upload.single('pp'),*/ function(req, res){
         spt = req.body.nombretable * req.body.nombresiegetable;
         const Data = new Reservation({
             roomname : req.body.roomname,
@@ -209,14 +223,19 @@
             nombretable : req.body.nombretable,
             nombresiege : spt,
             nombresiegetable : req.body.nombresiegetable,
-            statut : 'false',
-            pp : req.body.pp,
+            statut : false,
+            //pp : req.body.pp,
             id_reserveur : 'Aucun'
         });
         if (!req.body.pp){
-            res.status(400).send('no file uploaded');
+            res.status(402).send('no file uploaded');
         }
-        Data.save().then(() => { console.log('Data saved successfuly'); res.redirect(process.env.FRONT_URL + '/compte/listesalle'); }).catch(err => console.error(err));
+        Data.save().then(() => { 
+            console.log('Data saved successfuly'); 
+            res.status(201).json({"result" : "salle save"})
+            //res.redirect(process.env.FRONT_URL + '/compte/listesalle'); 
+        })
+        .catch(err => console.error(err));
     });
 
 /* MODIFIER SALLE */
@@ -332,3 +351,5 @@
     var server = app.listen(5005, function () {
         console.log("server listening on port 5005");
     })
+
+    module.exports = app
